@@ -1,41 +1,51 @@
 <?php
-include("koneksi.php");?>
+include("koneksi.php");
+if(!isset($_GET['id'])){
+    header("location:barang.php?")
+}
+    $kode=$_GET['id'];
+    $sql="SELECT * FROM barang where id=$kode";
+    $query = mysqli_query($db,$sql)
+    $barang =mysqli_fetch_assoc($query);
 
+    if(mysqli_num_rows($query) <1){
+        die ("data tidak ditemukan");
+    }
+
+?>
 <html>
-<head>
-</head>
-<body>
-  <h1>Data Master Barang </h1>
-  <h4> <a href=tambah.php> Tambah Barang</a></h4>
-  <table border="1">
-      <tr>
-          <th>Nama Lengkap</th>
-          <th>Tempat Lahir</th>
-          <th>Tanggal Lahir</th>
-          <th>Alamat</th>
-          <th>Jenis Kelamin</th>
-          <th>Agama</th>
+    <head>
+    </head>
+    <body>
+    <h1>Data edit barang</h1>
+    <h4> <a href=tambah.php>tambah barang</a></h4>
+    <table border="1">
+        <tr>
+            <th>kode barang</th>
+            <th>nama barang</th>
+            <th>stok barang</th>
+            <th>Barang barang</th>
+            <th>Aksi</th>
 </tr>
+
 
 <?php
 include("koneksi.php");
-$sql='SELECT * FROM barang';
+$sql='SELECT * FROM Barang';
 $query = mysqli_query($db, $sql);
 
 while($barang=mysqli_fetch_array($query)){
     echo "<tr>";
-    echo "<td>".$Pendaftaran['Nama Lengkap']."</td>";
-    echo "<td>".$Pendaftaran['Tempat Lahir']."</td>";
-    echo "<td>".$Pendaftaran['Tanggal Lahir']."</td>";
-    echo "<td>".$Pendaftaran['Alamat']."</td>";
-    echo "<td>".$Pendaftaran['Jenis Kelamin']."</td>";
-    echo "<td>".$Pendaftaran'Agama']."</td>";
+    echo "<td>" .$barang['id']."</td>";
+    echo "<td>" .$barang['nama']."</td>";
+    echo "<td>" .$barang['stok']."</td>";
+    echo "<td>" .$barang[ 'harga']."</td>";
     echo "<td>";
-    echo "<a href='edit-barang.php?id=".$barang['id']."'>Edit</a>|";
-    echo "<a href='hapus-barang.php?id=".$barang['id']."'>Hapus</a>";
+    echo "<a href='edit-barang.php?id". $barang['id']. "'>Edit</a>|";
+    echo "<a href='hapus-barang.php?id". $barang['id']. "'>hapus</a>";
     echo "</tr>";
-
 }
+
 ?>
 </table>
 </body>
